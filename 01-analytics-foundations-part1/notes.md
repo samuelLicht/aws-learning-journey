@@ -4,7 +4,7 @@
 > **Duración total:** 2h  
 > **Idioma del curso:** Español (LATAM)  
 > **Completado el:** -  
-> **Avance:** Lecciones 1-5 completadas
+> **Avance:** Lecciones 1-10 completadas
 
 ---
 
@@ -92,6 +92,164 @@ El curso introduce los conceptos base del análisis de datos y cómo AWS los abo
 
 
 ---
+
+## Servicios de AWS por cada V
+
+### Volumen — ¿Cómo almaceno grandes cantidades de datos?
+
+**El desafío:** Los datos crecen de terabytes a petabytes. Los sistemas
+tradicionales no escalan y el costo de ampliarlos es muy alto.
+
+**Tipos de fuentes de datos:**
+
+| Tipo | Ejemplos |
+|------|---------|
+| **Transaccionales** | Info de clientes, compras en línea, contratos |
+| **Temporales** | Movimientos en videojuegos, caché del navegador |
+| **Objetos** | Imágenes, videos, correos, contenido de redes sociales |
+
+**Servicios AWS para Volumen:**
+- **Amazon S3** → Almacenamiento de objetos escalable. Ideal para datos
+  no estructurados (videos, imágenes, archivos).
+- **Amazon RDS** → Base de datos relacional administrada en la nube.
+- **Amazon Redshift** → Data warehouse para análisis a escala de petabytes.
+- **Amazon DynamoDB** → Base de datos NoSQL rápida y altamente escalable.
+
+---
+
+### Variedad — ¿Cómo proceso datos de tipos tan distintos?
+
+**El desafío:** Los datos vienen de múltiples fuentes con estructuras
+muy diferentes. Integrarlos y administrarlos es complejo.
+
+**Los 3 tipos de datos:**
+
+| Tipo | Características | Ejemplos | Almacenamiento |
+|------|----------------|---------|----------------|
+| **Estructurados** | Esquema fijo, tablas con filas y columnas | Registros de suscriptores, transacciones | RDBMS (MySQL, PostgreSQL, Aurora) |
+| **Semiestructurados** | Sin esquema estricto, flexible | JSON, XML, CSV, conversaciones de chat | NoSQL (DynamoDB, DocumentDB) |
+| **No estructurados** | Sin estructura única, requieren etiquetado | Videos, fotos, PDFs, correos | Data lakes, S3 |
+
+**OLTP vs OLAP — diferencia clave:**
+
+| | OLTP | OLAP |
+|--|------|------|
+| **Para qué** | Almacenar y escribir datos rápido | Leer y analizar datos |
+| **Optimizado para** | Operaciones de escritura | Operaciones de lectura |
+| **Ejemplo** | App de compras registrando pedidos | Dashboard analizando ventas del mes |
+| **Indexación** | Basada en filas | Basada en columnas |
+
+
+**Servicios AWS para Variedad:**
+- **Amazon Aurora** → RDBMS de alto rendimiento compatible con MySQL y PostgreSQL
+- **Amazon RDS** → Bases de datos relacionales administradas
+- **Amazon DynamoDB** → NoSQL clave-valor, muy flexible
+- **Amazon DocumentDB** → Compatible con MongoDB (semiestructurado)
+- **Amazon ElastiCache** → Caché en memoria para rendimiento en tiempo real
+- **Amazon Redshift** → Almacenamiento columnar para análisis (OLAP)
+- **AWS DMS** → Migración de bases de datos a AWS con mínimo tiempo de inactividad
+
+---
+
+### Velocidad — ¿Proceso en tiempo real o en lotes?
+
+**El desafío:** Los datos se generan a una velocidad sin precedentes.
+Los sistemas deben procesar millones de eventos simultáneos sin
+degradar la experiencia del usuario.
+
+**Los 2 tipos de procesamiento:**
+
+| Tipo | Cuándo usarlo | Ejemplos |
+|------|--------------|---------|
+| **Por lotes (Batch)** | Grandes volúmenes a intervalos definidos | Registros de servidores, datos financieros, reportes |
+| **Streaming** | Datos continuos que necesitan respuesta inmediata | Compras en e-commerce, sensores IoT, redes sociales |
+
+**Las 4 velocidades de procesamiento:**
+
+| Velocidad | Descripción |
+|-----------|-------------|
+| **Programado** | Se ejecuta en horarios fijos (ej: cada noche a las 2am) |
+| **Periódico** | Se ejecuta cuando se acumula cierta cantidad de datos |
+| **Casi en tiempo real** | Segundos o minutos de retraso |
+| **En tiempo real** | Procesamiento instantáneo, milisegundos |
+
+**Servicios AWS para Velocidad:**
+- **Amazon Kinesis Data Streams** → Streaming de datos en tiempo real
+- **Amazon Kinesis Data Firehose** → Carga de streaming a S3, Redshift, etc.
+- **AWS Lambda** → Procesamiento serverless de eventos en tiempo real
+- **Amazon MSK (Managed Kafka)** → Streaming a escala empresarial
+
+---
+
+### Veracidad — ¿Mis datos son confiables?
+
+**El desafío:** Los datos cambian al transferirse entre sistemas y
+procesos, afectando su integridad y confiabilidad.
+
+**ETL vs ELT — los dos enfoques de transformación:**
+
+| | ETL | ELT |
+|--|-----|-----|
+| **Orden** | Extraer → Transformar → Cargar | Extraer → Cargar → Transformar |
+| **Cuándo transformar** | Antes de cargar | Después de cargar |
+| **Usado con** | Bases de datos heredadas | Bases de datos modernas en la nube |
+| **Ventaja** | Datos limpios desde el inicio | Flexibilidad para transformar cuando se necesite |
+
+**Propósito del ETL/ELT:**
+- Garantizar exactitud, precisión y profundidad de los datos
+- Reunir datos de diferentes fuentes en una imagen completa
+- Crear datasets personalizados para responder preguntas de negocio
+
+**Servicios AWS para Veracidad:**
+- **AWS Glue** → ETL serverless: extrae, transforma y carga datos
+- **AWS Glue DataBrew** → Limpieza y preparación visual de datos
+- **AWS Lambda** → Transformaciones ligeras en tiempo real
+
+---
+
+### Valor — ¿Qué decisión tomo con estos datos?
+
+**El desafío:** Tener datos no es suficiente. Hay que extraer
+información útil que permita tomar decisiones estratégicas.
+
+**El proceso para generar valor:**
+1. Recopilar datos, hechos y conclusiones
+2. Identificar la audiencia y sus expectativas
+3. Elegir el estilo de visualización adecuado
+4. Crear informes y dashboards
+
+**Los 3 tipos de informes visuales:**
+
+| Tipo | Descripción | Ejemplo |
+|------|-------------|---------|
+| **Estáticos** | No cambian, son una "foto" del momento | PDF con resultados del mes |
+| **Interactivos** | El usuario puede explorar y filtrar | Reporte web con filtros |
+| **Dashboards** | Vista en tiempo real con múltiples métricas | Panel de ventas en vivo |
+
+
+**Servicios AWS para Valor:**
+- **Amazon QuickSight** → BI y dashboards interactivos
+- **Amazon Athena** → Consultas SQL directamente sobre datos en S3
+- **Amazon SageMaker** → ML para generar predicciones y análisis avanzado
+- **Amazon Q (QuickSight)** → Generar dashboards con lenguaje natural
+
+---
+
+## 🗺️ Mapa completo: Las 5 V y sus servicios AWS
+
+| V | Servicio principal | Para qué |
+|---|-------------------|---------|
+| **Volumen** | Amazon S3 | Almacenar cualquier cantidad de datos |
+| **Volumen** | Amazon Redshift | Data warehouse a escala masiva |
+| **Variedad** | AWS Glue | ETL para cualquier tipo de dato |
+| **Variedad** | Amazon DynamoDB | NoSQL flexible |
+| **Velocidad** | Amazon Kinesis | Streaming en tiempo real |
+| **Velocidad** | AWS Lambda | Procesamiento serverless |
+| **Veracidad** | AWS Glue DataBrew | Limpieza y transformación |
+| **Valor** | Amazon QuickSight | Visualización y BI |
+| **Valor** | Amazon Athena | Consultas SQL sobre S3 |
+
+---
 ## Progreso de lecciones
 
 - [x] Lección 1: Introducción y conceptos generales
@@ -99,9 +257,14 @@ El curso introduce los conceptos base del análisis de datos y cómo AWS los abo
 - [x] Lección 3: Machine Learning
 - [x] Lección 4: IA Generativa y Amazon Q Developer
 - [x] Lección 5: Las 5 V de los macrodatos
-- [ ] Lección 6: Volumen y servicios AWS
-- [ ] Lección 7: Variedad y servicios AWS
-- [ ] Lección 8: Velocidad y servicios AWS
-- [ ] Lección 9: Veracidad y servicios AWS
-- [ ] Lección 10: Valor y servicios AWS
+- [x] Lección 6: Volumen y servicios AWS
+- [x] Lección 7: Variedad y servicios AWS
+- [x] Lección 8: Velocidad y servicios AWS
+- [x] Lección 9: Veracidad y servicios AWS
+- [x] Lección 10: Valor y servicios AWS
+- [ ] Lección 11: Servicios de AWS para el volumen
+- [ ] Lección 12: Servicios de AWS para la variedad
+- [ ] Lección 13: Servicios de AWS para la velocidad
+- [ ] Lección 14: Servicios de AWS para la veracidad
+- [ ] Lección 15: Servicios de AWS para el valor
 - [ ] Conclusión y cuestionario final
