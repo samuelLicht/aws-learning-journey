@@ -250,6 +250,157 @@ información útil que permita tomar decisiones estratégicas.
 | **Valor** | Amazon Athena | Consultas SQL sobre S3 |
 
 ---
+
+
+## Qué aprendí hoy
+
+Si en la Parte 1 vimos *qué* es cada V de los macrodatos y un primer mapa de servicios, en esta parte profundicé en los **servicios específicos de AWS** que resuelven cada desafío. Cada lección sigue el caso de **AnyCompany Media** (empresa de streaming que genera petabytes de datos) y muestra qué servicio aplica para Volumen, Variedad, Velocidad, Veracidad y Valor, con sus características concretas y cómo se conectan entre sí en un flujo de análisis.
+
+---
+
+## Lección 11 — Servicios para el VOLUMEN
+
+**El desafío:** Almacenar petabytes de datos distribuidos en varios continentes, que escalen con picos de tráfico, con un modelo de pago por uso.
+
+| Servicio | Qué resuelve |
+|----------|--------------|
+| **Amazon S3** | Almacén de objetos seguro y escalable para datos semiestructurados y no estructurados |
+| **AWS Lake Formation** | Crea, gestiona y protege lagos de datos de forma más rápida |
+| **Amazon Redshift** | Data warehouse en la nube con la mejor relación precio-rendimiento |
+
+### Amazon S3 — a fondo
+- Es la **base de almacenamiento** de la mayoría de las cargas analíticas en AWS.
+- Almacena datos estructurados, semiestructurados y no estructurados (un "objeto" = un archivo).
+- **Durabilidad del 99.999999999%** (los famosos "11 nueves"), resiliencia global, acceso HTTP.
+- Tres formas en que ayuda con el volumen: **desacoplamiento**, **paralelización** y **centralización** de los conjuntos de datos.
+
+### AWS Lake Formation — a fondo
+- Facilita ingerir, limpiar, catalogar, transformar y proteger datos para análisis y ML.
+- Configura automáticamente los servicios subyacentes para cumplir las políticas definidas.
+- El lago de datos vive **sobre Amazon S3**.
+
+### Amazon Redshift — a fondo
+- Data warehouse rápido para datos **estructurados** de gran volumen.
+- Usa **almacenamiento en columnas** + procesamiento masivo en paralelo + ML.
+- Consulta petabytes en el warehouse y exabytes en el lago de datos (S3).
+- Evita sobrecargar los sistemas transaccionales con consultas analíticas pesadas.
+
+> **Cómo lo resolvió AnyCompany Media:** Usa **S3** para guardar películas, series, fotos de producción y datos no estructurados, escalando con los picos de tráfico.
+
+---
+
+## Lección 12 — Servicios para la VARIEDAD
+
+**El desafío:** Integrar y analizar datos estructurados y semiestructurados de fuentes muy diversas (clientes, marketing, redes sociales) sin sacrificar rendimiento.
+
+| Servicio | Qué resuelve |
+|----------|--------------|
+| **Amazon RDS** | Base de datos relacional administrada (OLTP) |
+| **Amazon Redshift** | Data warehouse para análisis (OLAP) |
+| **Amazon DynamoDB** | NoSQL rápida, flexible y totalmente administrada |
+| **Amazon OpenSearch Service** | Búsqueda, supervisión y análisis en tiempo real |
+
+### Puntos clave
+- **Amazon RDS:** soporta Aurora, MySQL, PostgreSQL, MariaDB, Oracle y SQL Server. Automatiza respaldos, parches y recuperación. **Indexación basada en filas** → ideal para cargas transaccionales (OLTP).
+- **Amazon Redshift:** con **Redshift Spectrum** también analiza datos semiestructurados directamente en los lagos de S3. Usa SQL para todo.
+- **Amazon DynamoDB:** rendimiento de un solo dígito en milisegundos, replicación multirregión automática, disponibilidad de hasta 99.999%. Particiona los datos automáticamente.
+- **Amazon OpenSearch Service:** conjunto de búsqueda/análisis de código abierto. Se integra con S3, Kinesis Data Streams y DynamoDB Streams. Bueno para análisis de logs y opiniones en redes.
+
+> **Cómo lo resolvió AnyCompany Media:** Migró sus bases relacionales a la nube con **Amazon RDS**, escalando sin tener que administrar la infraestructura.
+
+---
+
+## Lección 13 — Servicios para la VELOCIDAD
+
+**El desafío:** Procesar grandes cantidades de datos de streaming en tiempo real (web, dispositivos, redes sociales) sin saturar el sistema.
+
+| Servicio | Qué resuelve |
+|----------|--------------|
+| **Amazon EMR** | Procesamiento de macrodatos a escala de petabytes + ML |
+| **Amazon MSK** | Apache Kafka administrado para streaming |
+| **Amazon Kinesis** | Ingesta y análisis de datos en streaming |
+| **AWS Lambda** | Cómputo serverless basado en eventos |
+
+### Puntos clave
+- **Amazon EMR:** plataforma administrada que usa frameworks open source (**Spark, Hadoop, HBase, Hive, Hudi, Presto**). Corre en clústeres EC2, EKS y Outposts. Menos de la mitad del costo on-premise. Se integra con SageMaker.
+- **Amazon MSK:** servicio totalmente administrado de **Apache Kafka** para arquitecturas basadas en eventos. Aprovisiona, parchea y escala los clústeres por ti.
+- **Amazon Kinesis:** recopila, procesa y analiza streaming en tiempo real. Trabaja con Lambda para flujos serverless.
+
+### Servicios de streaming de Kinesis
+| Servicio | Descripción |
+|----------|-------------|
+| **Kinesis Data Streams** | Captura datos continuos en tiempo real de cientos de miles de fuentes |
+| **Kinesis Data Firehose** | Carga streaming (casi en tiempo real) a almacenes de datos de AWS |
+| **Managed Service para Apache Flink** | Ejecuta apps de Flink y analiza streaming sin gestionar infraestructura |
+
+- **AWS Lambda:** ejecuta código en respuesta a eventos (cambio en S3, update en DynamoDB) sin administrar servidores. Escala automáticamente.
+
+---
+
+## Lección 14 — Servicios para la VERACIDAD
+
+**El desafío:** Garantizar precisión, coherencia e integridad de los datos en todo su ciclo de vida (limpieza + protección contra manipulación).
+
+| Servicio | Qué resuelve |
+|----------|--------------|
+| **Amazon EMR** | Recopilación y procesamiento a escala de petabytes |
+| **AWS Glue** | ETL serverless + calidad de datos |
+| **AWS Glue DataBrew** | Limpieza y normalización visual (sin código) |
+| **Amazon DataZone** | Catalogar, gobernar y compartir datos |
+
+### Puntos clave
+- **Amazon EMR:** enfoque más "manual" y personalizable; requiere conocimientos técnicos sólidos para construir tu pipeline a medida.
+- **AWS Glue:** ETL **serverless** y más optimizado que EMR. Incluye el **Catálogo de datos de Glue** (metaalmacén) y **Calidad de datos de Glue** con su lenguaje **DQDL**. Puede lanzar trabajos ETL apenas llegan datos nuevos a S3.
+- **AWS Glue DataBrew:** preparación **visual** de datos, +250 transformaciones prediseñadas, mapeo del **linaje** de datos, sin escribir código. Se conecta a S3, Redshift, Lake Formation, Aurora y RDS.
+- **Amazon DataZone:** gobierno de datos con catálogo, control de acceso detallado y suscripciones de autoservicio. Se integra con Redshift, Glue y Lake Formation.
+
+> **Diferencia útil de recordar:** EMR = control total y manual. Glue = experiencia más optimizada y serverless.
+
+---
+
+## Lección 15 — Servicios para el VALOR
+
+**El desafío:** Convertir datos dispersos y no estructurados en información visual y predictiva para tomar decisiones (ej: eficacia de campañas publicitarias).
+
+| Servicio | Qué resuelve |
+|----------|--------------|
+| **Amazon QuickSight** | BI y visualización de datos |
+| **Amazon SageMaker** | Crear, entrenar y desplegar modelos de ML |
+| **Amazon Bedrock** | Apps de IA generativa con modelos fundacionales |
+| **Amazon Athena** | Análisis SQL interactivo sobre datos donde estén |
+
+### Puntos clave
+- **Amazon QuickSight:** BI generativa, paneles interactivos, consultas en lenguaje natural. Se conecta a S3, Redshift, RDS, Athena y terceros. Se integra con SageMaker para mostrar predicciones de ML.
+- **Amazon SageMaker:** plataforma de ML de extremo a extremo (preparar datos → entrenar → desplegar → monitorear). **SageMaker JumpStart** ofrece modelos fundacionales y soluciones prediseñadas.
+- **Amazon Bedrock:** servicio serverless para IA generativa, con modelos fundacionales de varios proveedores (**incluido Anthropic**) vía una sola API.
+- **Amazon Athena:** análisis **interactivo serverless** con SQL estándar sobre datos en S3. Ideal para consultas únicas y exploración. Se integra con Glue.
+
+---
+
+## 🗺️ Mapa completo actualizado: Las 5 V y sus servicios
+
+| V | Servicios vistos en esta parte | Idea central |
+|---|-------------------------------|--------------|
+| **Volumen** | S3, Lake Formation, Redshift | Almacenar a cualquier escala |
+| **Variedad** | RDS, Redshift, DynamoDB, OpenSearch | Manejar datos estructurados, semi y no estructurados |
+| **Velocidad** | EMR, MSK, Kinesis, Lambda | Procesar streaming y eventos en tiempo real |
+| **Veracidad** | EMR, Glue, Glue DataBrew, DataZone | Limpiar, transformar y gobernar datos |
+| **Valor** | QuickSight, SageMaker, Bedrock, Athena | Visualizar, predecir y decidir |
+
+---
+
+APUNTES DE CUESTIONARIO/Conclusiones "apuntes"
+
+Amazon Kinesis - streaming 
+
+Amazon Redshift - Qué servicio se usa para el análisis de datos de gran volumen en un almacenamiento de datos y un lago de datos
+
+Qué servicios de AWS se usan para el procesamiento analítico en línea (OLAP): Amazon Redshift y Amazon RDS son bases de datos de tipo OLAP.
+
+Análisis interactivo de registros: Kinessis
+
+metaalmacenamiento para los datos transformados: AWS Glue
+
 ## Progreso de lecciones
 
 - [x] Lección 1: Introducción y conceptos generales
@@ -262,9 +413,9 @@ información útil que permita tomar decisiones estratégicas.
 - [x] Lección 8: Velocidad y servicios AWS
 - [x] Lección 9: Veracidad y servicios AWS
 - [x] Lección 10: Valor y servicios AWS
-- [ ] Lección 11: Servicios de AWS para el volumen
-- [ ] Lección 12: Servicios de AWS para la variedad
-- [ ] Lección 13: Servicios de AWS para la velocidad
-- [ ] Lección 14: Servicios de AWS para la veracidad
-- [ ] Lección 15: Servicios de AWS para el valor
-- [ ] Conclusión y cuestionario final
+- [x] Lección 11: Servicios de AWS para el volumen
+- [x] Lección 12: Servicios de AWS para la variedad
+- [x] Lección 13: Servicios de AWS para la velocidad
+- [x] Lección 14: Servicios de AWS para la veracidad
+- [x] Lección 15: Servicios de AWS para el valor
+- [x] Conclusión y cuestionario final
