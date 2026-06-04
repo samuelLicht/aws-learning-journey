@@ -16,8 +16,8 @@ I'm Samuel Díaz Licht, a Systems Engineering student at Universidad Santo Tomá
 
 | # | Course | Duration | Status | Notes |
 |---|--------|----------|--------|-------|
-| 1 | Fundamentals of Analytics on AWS – Part 1 | 2h | 🔄 In progress | - |
-| 2 | Fundamentals of Analytics on AWS – Part 2 | 1h 30m | ⏳ Pending | - |
+| 1 | Fundamentals of Analytics on AWS – Part 1 | 2h | ✅ Completed | - |
+| 2 | Fundamentals of Analytics on AWS – Part 2 | 1h 30m | 🔄 In progress | - |
 | 3 | AWS Glue Getting Started | 1h | ⏳ Pending | - |
 | 4 | Getting Started with Amazon Redshift | 1h | ⏳ Pending | - |
 | 5 | Amazon DynamoDB - Data Modeling Techniques | 1h | ⏳ Pending | - |
