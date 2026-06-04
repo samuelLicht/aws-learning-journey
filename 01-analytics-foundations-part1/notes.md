@@ -1,10 +1,10 @@
 # Fundamentos de Análisis en AWS - Parte 1
 
-> **Estado:** 🔄 En progreso  
+> **Estado:** completado 
 > **Duración total:** 2h  
 > **Idioma del curso:** Español (LATAM)  
-> **Completado el:** -  
-> **Avance:** Lecciones 1-10 completadas
+> **Completado el:** 6/4/2026 
+> **Avance:** Lecciones 1-15 completadas
 
 ---
 
